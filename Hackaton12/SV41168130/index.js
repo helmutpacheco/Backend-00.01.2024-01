@@ -1,46 +1,92 @@
-const http = require("http");
-const url = require("url");
+const http = require('http');
+const url = require('url');
 
 let listSales = [];
 
+// Constantes para códigos de estado
+const HTTP_STATUS_NOT_FOUND = 404;
+const HTTP_STATUS_BAD_REQUEST = 400;
+const HTTP_STATUS_CREATED = 201;
+const HTTP_STATUS_OK = 200;
 
-const server = http.createServer((req, res) => {
-    // res.writeHead(200, { "Content-type": "application/json"});
+// Constantes para estado de venta
+const STATUS_PENDING = 0;
+const STATUS_COMPLETE = 1;
 
-    const parseUrl= url.parse(req.url, true);
-    const path = parseUrl.pathname;
+// Enrutador
+const routes = {
+    'POST' : {
+        '/sales': handlePostSales
+    },
+    'GET' : {
+        '/sales/complete' : handleCompleteSales,
+        '/sales/pending' : handlePendingSales
+    }
+};
 
-    if (req.method == "POST" && path === "/sales") {
-        console.log("estas creando");
-        let body = "";
-        console.log(req.on);
+function isValidDate(dateString) {
+    return !isNaN(Date.parse(dateString));
+}
 
-        req.on("data", (chuck) => {
-            console.log(chuck);
-            body += chuck.toString();
-        });
+function handlePostSales(req, res) {
+    let body = '';
+    
+    req.on('data', chunk => {
+        body += chunk.toString();
+    });
 
-        return req.on("end", () => {
-            const  {name, description, date } = JSON.parse(body);
-
-            if(!name || !description || !date) {
-
-                res.writeHead(400, { "Content-Type": "application/json"});
-                return res.end(JSON.stringify({ message: "Faltan campos" }));
+    req.on('end', () => {
+        try {
+            const { name, description, date, status } = JSON.parse(body);
             
-            } else {
-                console.log(name, description, date);
-                
-                listSales.push({ name, description, date });
+            if(!name || typeof name !== 'string' || !description || typeof description !== 'string' || !date || !isValidDate(date) || typeof status !== 'number') {
 
-                req.writeHead(201, {"Content-type": "application/json"});
+                res.writeHead(HTTP_STATUS_BAD_REQUEST, { 'Content-Type': 'application/json'});
+                return res.end(JSON.stringify({ message: 'Datos inválidos' }));
+        
+            } else {
+
+                console.log(name, description, date, status);            
+                listSales.push({ name, description, date, status });
+                res.writeHead(HTTP_STATUS_CREATED, { 'Content-type': 'application/json' });
                 return res.end(JSON.stringify(listSales));
             }
-        });
+        } catch (e) {
+            res.writeHead(HTTP_STATUS_BAD_REQUEST, {'Content-Type': 'application/json'});
+            return res.end(JSON.stringify({ message: 'Formato de JSON inválido' }));
+        }
+        
+    });
+}
+
+function handleCompleteSales(req, res) {
+    const completedSales = listSales.filter(sale => sale.status === STATUS_COMPLETE);
+    res.writeHead(HTTP_STATUS_OK, { 'Content-type': 'application/json'});
+    res.end(JSON.stringify(completedSales));
+}
+
+function handlePendingSales(req, res) {
+    const pendingSales = listSales.filter(sale => sale.status === STATUS_PENDING);
+    res.writeHead(HTTP_STATUS_OK, { 'Content-type': 'application/json'});
+    res.end(JSON.stringify(pendingSales));
+}
+
+const server = http.createServer((req, res) => {
+
+    const parseUrl = new URL(req.url, `http://${req.headers.host}`);
+    const path = parseUrl.pathname;
+    const method = req.method;
+
+    // Configurar los encabezados para JSON
+    res.setHeader('Content-Type', 'application/json');
+
+    // Encontrar el manejador adecuado basado en el método y la ruta
+    if (routes[method] && routes[method][path]) {
+        routes[method][path](req, res);
+    } else {
+        res.statusCode = HTTP_STATUS_NOT_FOUND;
+        res.end(JSON.stringify({ message: 'Recurso no encontrado' }));
     }
-    
-    res.writeHead(404 , { "Content-type": "application/json"});
-    res.end("recurso no encontrado");
 });
 
-server.listen(3000);
+server.listen(3000, () => console.log('Server listening on port 3000'));
