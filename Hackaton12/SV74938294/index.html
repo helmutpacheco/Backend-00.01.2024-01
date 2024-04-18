@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ES">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Compras</title>
+</head>
+<body>
+  <h1>Lista de Compras</h1>
+
+  <!-- Formulario para crear la lista de compras -->
+  <form id="crearListaForm" action="/crear-pendiente" method="POST">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required>
+    <br>
+    <label for="descripcion">Descripción:</label>
+    <input type="text" id="descripcion" name="descripcion" required>
+    <br>
+    <label for="fecha">Fecha:</label>
+    <input type="date" id="fecha" name="fecha" required>
+    <br>
+    <button type="submit">Crear Lista</button>
+  </form>
+
+  <hr>
+
+  <!-- Sección para mostrar los elementos pendientes -->
+  <h2>Pendientes:</h2>
+  <ul id="pendientesList"></ul>
+
+  <hr>
+
+  <!-- Sección para mostrar los elementos completados -->
+  <h2>Completados:</h2>
+  <ul id="completadosList"></ul>
+
+  <!-- Script para interactuar con el servidor Node.js -->
+  <script src="./scripts/main.js"></script>
+</body>
+</html>

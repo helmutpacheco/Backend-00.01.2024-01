@@ -1,0 +1,33 @@
+   <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Lista de Compras</title>
+    </head>
+    <body>
+      <h1>Lista de Compras</h1>
+      <ul>
+        <li><a href="pendientes.html">Ver pendientes</a></li>
+        <li><a href="completados.html">ver completados</a></li>
+        <ul> 
+    </ul>
+
+      </ul>
+      <hr>
+      <form method="POST" action="/crearLista">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br>
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" required></textarea><br>
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required><br>
+        <label for="esCompletado">¿Completado?</label>
+        <input type="checkbox" id="esCompletado" name="esCompletado"><br>
+        <button type="submit">Crear Lista</button>
+      </form>
+      <script src="node.js"></script>
+    </body>
+    </html>
+  
+  

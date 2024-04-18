@@ -1,10 +1,10 @@
 const db = require('../models');
 const EspecieMascota = db.EspecieMascota;
 
-exports.getAllEspeciesMascota = async (req, res) => {
+exports.getAllEspecieMascota = async (req, res) => {
   try {
-    const especies = await EspecieMascota.findAll();
-    res.json(especies);
+    const especie = await EspecieMascota.findAll();
+    res.json(especie);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -4,14 +4,6 @@ const app = express();
 const db = require("./app/models");
 require('dotenv').config();
 
-// Sincronizar la base de datos con los modelos
-//db.sequelize.sync()
-  //.then(() => {
-    //console.log("Base de datos sincronizada.");
-  //})
-  //.catch((err) => {
-   // console.log("Error al sincronizar la base de datos: " + err.message);
-  //});
 
 // Middleware
 app.use(cors());
