@@ -48,13 +48,14 @@ exports.list = (perPage, page) => {
         User.find()
             .limit(perPage)
             .skip(perPage * page)
-            .exec(function (err, users) {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(users);
-                }
-            })
+            .then((data)=>{resolve(data)}).catch((err)=>{reject(err)})
+            // .exec(function (err, users) {
+            //     if (err) {
+            //         reject(err);
+            //     } else {
+            //         resolve(users);
+            //     }
+            // })
     });
 };
 
@@ -65,14 +66,21 @@ exports.patchUser = (id, userData) => {
 };
 
 exports.removeById = (userId) => {
+    console.log("removeById");
     return new Promise((resolve, reject) => {
-        User.deleteMany({_id: userId}, (err) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(err);
-            }
-        });
+        // User.deleteMany({_id: userId}, (err) => {
+        //     if (err) {
+        //         reject(err);
+        //     } else {
+        //         resolve(err);
+        //     }
+        // });
+
+        User.deleteMany({_id: userId})
+        .then((result) => { 
+            console.log(result); 
+        })
+        .catch((err)=>{reject(err)})
     });
 };
 

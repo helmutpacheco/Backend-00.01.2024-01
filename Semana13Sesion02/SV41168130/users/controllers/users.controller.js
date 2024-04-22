@@ -42,7 +42,8 @@ exports.patchById = (req, res) => {
 
     UserModel.patchUser(req.params.userId, req.body)
         .then((result) => {
-            res.status(204).send({});
+            // res.status(204).send({});            
+            res.status(200).send("Successfully updated");            
         });
 
 };
@@ -50,6 +51,7 @@ exports.patchById = (req, res) => {
 exports.removeById = (req, res) => {
     UserModel.removeById(req.params.userId)
         .then((result)=>{
-            res.status(204).send({});
+            // res.status(204).send({});
+            res.status(200).send("Successfully deleted");
         });
 };
