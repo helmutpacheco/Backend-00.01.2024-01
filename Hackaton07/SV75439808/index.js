@@ -76,7 +76,7 @@ app.get("/unplash", (req, res) => {
         td, h3 {
           text-align: center;
         }
-        </style> 
+        </style>
       `);
     })
     .catch((error) => {
@@ -138,7 +138,7 @@ app.get("/thecocktaildb", (req, res) => {
         td, h3 {
           text-align: center;
         }
-        </style> 
+        </style>
       `);
     })
     .catch((error) => {
@@ -208,7 +208,7 @@ app.get("/randomuser", (req, res) => {
         td {
           text-align: center;
         }
-        </style> 
+        </style>
       `);
     })
     .catch((error) => {
@@ -269,7 +269,7 @@ app.get("/fakestore", (req, res) => {
         td {
           text-align: center;
         }
-        </style> 
+        </style>
       `);
     })
     .catch((error) => {
@@ -330,7 +330,7 @@ app.get("/rickandmortyapi", (req, res) => {
         <tr>
           <td>Photo</td>
           <td><img src="${response.data.image}"></td>
-        </tr>    
+        </tr>
         </table>
         <style>
         h3{

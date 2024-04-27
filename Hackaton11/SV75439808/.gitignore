@@ -1,2 +1,16 @@
-node_modules 
-.env 
+# Ignorar directorios y archivos generados automáticamente
+node_modules/
+dist/
+build/
+coverage/
+
+# Ignorar archivos de configuración sensibles
+config/config.js
+
+# Ignorar archivos de registro
+logs/
+
+# Ignorar archivos de respaldo y temporales
+*.log
+*.bak
+*.tmp

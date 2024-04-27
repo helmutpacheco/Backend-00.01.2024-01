@@ -3,40 +3,40 @@ let firstName = "Dylan";
 let lastName = "Lopez";
 //firstName = 33;
 let v = true;
-v = "string"; // no error as it can be "any" type
-Math.round(v); // no error as it can be "any" type
+v = "string"; // no hay error ya que puede ser de tipo "any"
+Math.round(v); // no hay error ya que puede ser de tipo "any"
 let w = 1;
-w = "string"; // no error
+w = "string"; // no hay error
 w = {
     runANonExistentMethod: () => {
-        console.log("I think therefore I am");
+        console.log("Pienso, luego existo");
     }
 };
-// How can we avoid the error for the code commented out below when we don't know the type?
+// ¿Cómo podemos evitar el error para el código comentado abajo cuando no conocemos el tipo?
 // w.runANonExistentMethod(); // Error: Object is of type 'unknown'.
 if (typeof w === 'object' && w !== null) {
     w.runANonExistentMethod();
 }
 const names = ["Dylan"];
-//names.push("Jack"); // Error: Property 'push' does not exist on type 'readonly string[]'.
-// try removing the readonly modifier and see if it works?
-// define our tuple
+//names.push("Jack"); // Error: La propiedad 'push' no existe en el tipo 'readonly string[]'.
+// intenta quitar el modificador readonly y ver si funciona?
+// define nuestra tupla
 let ourTuple;
-// initialize correctly
-ourTuple = [5, false, 'Coding God was here'];
-// We have no type safety in our tuple for indexes 3+
-ourTuple.push('Something new and wrong');
+// inicializar correctamente
+ourTuple = [5, false, 'El Dios de la Codificación estuvo aquí'];
+// No tenemos seguridad de tipos en nuestra tupla para índices 3+
+ourTuple.push('Algo nuevo y incorrecto');
 console.log(ourTuple);
-// define our readonly tuple
-const ourReadonlyTuple = [5, true, 'The Real Coding God'];
-// throws error as it is readonly.
-//ourReadonlyTuple.push('Coding God took a day off');
+// define nuestra tupla de solo lectura
+const ourReadonlyTuple = [5, true, 'El Verdadero Dios de la Codificación'];
+// lanza error ya que es de solo lectura.
+//ourReadonlyTuple.push('El Dios de la Codificación se tomó un día libre');
 const car = {
     type: "Toyota",
     model: "Corolla",
     year: 2009
 };
-//car.year = "2007";
+//car.year = "2007"; error tiene q ser de tipo number
 const car2 = {
     type: "Toyota",
 };
@@ -48,16 +48,16 @@ var CardinalDirections;
     CardinalDirections[CardinalDirections["South"] = 3] = "South";
     CardinalDirections[CardinalDirections["West"] = 4] = "West";
 })(CardinalDirections || (CardinalDirections = {}));
-// logs 1
+// muestra 1
 console.log(CardinalDirections.North);
-// logs 4
+// muestra 4
 console.log(CardinalDirections.West);
 const rectangle = {
     height: 20,
     width: 10
 };
 function printStatusCode(code) {
-    console.log(`My status code is ${code}.`);
+    console.log(`Mi código de estado es ${code}.`);
 }
 printStatusCode(404);
 printStatusCode('404');
@@ -65,13 +65,13 @@ function getTime() {
     return new Date().getTime();
 }
 function printHello() {
-    console.log('Hello!');
+    console.log('¡Hola!');
 }
 function multiply(a, b) {
     return a * b;
 }
 multiply(2, 4);
-let x = 'hello';
+let x = 'hola';
 console.log(x.length);
 class Person {
     constructor(name) {
@@ -82,4 +82,4 @@ class Person {
     }
 }
 const person = new Person("Jane");
-console.log(person.getName()); // person.name isn't accessible from outside the class since it's private
+console.log(person.getName()); // El nombre de la persona no es accesible desde fuera de la clase ya que es privado

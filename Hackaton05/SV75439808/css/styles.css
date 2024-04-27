@@ -132,6 +132,13 @@ section {
   }
 }
 
+input {
+  padding: 2px 6px;
+  background-color: rgba(179, 175, 173, 0.253);
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.267);
+}
+
 .column2 {
   flex: 1;
   margin: 0;
@@ -144,6 +151,8 @@ section {
 div.container {
   padding-left: 0;
   justify-content: left;
+  gap: 3px;
+  margin-bottom: 5px;
 }
 
 .btnverify {
@@ -164,6 +173,10 @@ div.container {
   .btnVerify {
     margin-right: 7px;
   }
+}
+
+.button {
+  gap: 5px;
 }
 
 .isa2 {

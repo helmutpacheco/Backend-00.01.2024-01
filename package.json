@@ -1,11 +1,8 @@
 {
   "dependencies": {
     "nodemon": "^3.1.0",
-<<<<<<< HEAD
     "sequelize": "^6.37.2",
-    "sqlite3": "^5.1.7"
-=======
+    "sqlite3": "^5.1.7",
     "yes": "^1.1.1"
->>>>>>> fuentes/main
   }
 }
