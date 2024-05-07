@@ -6,11 +6,11 @@ import { loadStripe } from "@stripe/stripe-js";
 
 function StripePayment() { 
   const [product, setProduct] = useState({ 
-    name: "Curso de IOS 2024", 
-    price: 200, 
+    name: "Curso de IOS 2026", 
+    price: 100, 
     productOwner: "Roberto Pineda", 
     description: 
-      "Curso de IOS para principiantes", 
+      "Curso de IOS para avanzados", 
     quantity: 1, 
   }); 
 
@@ -35,7 +35,7 @@ function StripePayment() {
     const result = stripe.redirectToCheckout({ 
       sessionId: session.id, 
     }); 
- 
+    console.log(result);
     if (result.error) { 
       console.log(result.error); 
     } 
