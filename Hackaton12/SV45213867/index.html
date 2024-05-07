@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Lista de Compras</h1>
+    <form id="formulario">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" required><br>
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" required><br>
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" required><br>
+        <button type="submit">Agregar</button>
+    </form>
+    <button onclick="location.href='/pendientes'">Ver Pendientes</button>
+    <button onclick="location.href='/completados'">Ver Completados</button>
+
+    <script src="index.js"></script>
+</body>
+</html>

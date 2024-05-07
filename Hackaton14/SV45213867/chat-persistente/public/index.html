@@ -1,0 +1,45 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Persistente</title>
+</head>
+<body>
+  <div id="messages"></div>
+  <input type="text" id="messageInput" placeholder="Escribe un mensaje">
+  <button onclick="sendMessage()">Enviar</button>
+  <button onclick="clearHistory()">Borrar Historial</button>
+
+  <script src="/socket.io/socket.io.js"></script> <!-- Utiliza esta ruta para cargar Socket.IO -->
+  <script>
+    const socket = io();
+
+    // Manejar mensajes recibidos del servidor
+    socket.on('message', (message) => {
+      const messagesDiv = document.getElementById('messages');
+      messagesDiv.innerHTML += `<p>${message}</p>`;
+    });
+
+    // Manejar la acción de borrar historial
+    socket.on('history cleared', () => {
+      const messagesDiv = document.getElementById('messages');
+      messagesDiv.innerHTML = '<p>Historial de mensajes borrado</p>';
+    });
+
+    // Función para enviar un mensaje al servidor
+    function sendMessage() {
+      const messageInput = document.getElementById('messageInput');
+      const message = messageInput.value;
+      socket.emit('message', message);
+      messageInput.value = '';
+    }
+
+    // Función para enviar la acción de borrar historial al servidor
+    function clearHistory() {
+      socket.emit('clear history');
+    }
+  </script>
+</body>
+</html>

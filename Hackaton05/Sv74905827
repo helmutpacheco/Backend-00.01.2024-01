@@ -1,0 +1,89 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SistemaRepCelulares</title>
+    
+</head>
+<body>
+    
+
+  <form>
+    <h2>Servicio de Reparación</h2>
+    <label for="nombreCliente">Nombre del cliente</label>
+    <input type="text" id="nombreCliente" name="nombreCliente" required> 
+    <br><br>
+
+    <label for="Modelo">Modelo</label>
+    <input type="text" id="Modelo" name="Modelo">
+    <br><br>
+
+    <label for="IMEI"> Numero IMEI</label>
+    <input type="text" id="IMEI" name="IMEI">
+    <button type="button" onclick="generarIMEI()">Generar</button>
+    <br><br>
+
+    <label for="NumSerie">Numero de serie</label>
+    <input type="text" name="NumSerie" id="NumSerie">
+    <button type="button" onclick="generarNumSerie()">Generar</button>
+    <br><br>
+
+    <button type="button" onclick="Validar()">Validar</button>
+    <button type="button" onclick="Cancelar()">Cancelar</button>
+    <br><br>
+
+    <table id="Registro" border="1">
+        <tr>
+            <th>NombreCliente</th>
+            <th>Modelo</th>
+            <th>NumDeSerie</th>
+            <th>IMEI</th>
+            <th>Fecha y Hora</th>
+            <th>Abono 50%</th>
+            <th>Diadnostico</th>
+            <th>Estado</th>
+        </tr>
+    </table>
+
+    <br>
+
+    <div id="Formulario">
+        <label for="Diagnostico">Diagnostico:</label> <br>
+        <textarea name="Diadnostico" id="Diadnostico" cols="30" rows="10"></textarea>
+
+        <br><br>
+
+        <label for="Tecnico">Tecnico:</label>
+        <select name="Tecnico" id="Tecnico">
+            <option value="Tecnico01">Tecnico01</option>
+            <option value="Tecnico02">Tecnico02</option>
+        </select>
+
+        <br><br>
+
+        <label for="EstadoDelEEquipo">EstadoDelEEquipo</label>
+        <select name="EstadoDelEEquipo" id="EstadoDelEEquipo">
+            <option value="Proceso">Proceso</option>
+            <option value="Terminado">Terminado</option>
+        </select>
+
+        <br><br>
+
+        <button type="button" onclick="Guardar()">Guardar</button>
+        <button type="button" onclick="Cancelar()">Cancelar</button>
+            
+
+    </div>
+
+
+
+
+  </form>
+
+
+
+
+
+</body>
+</html>

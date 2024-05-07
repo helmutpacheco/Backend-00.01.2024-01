@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat de Prueba</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Chat de Prueba</h1>
+    <div id="chat-window">
+        <div id="chat-messages"></div>
+        <form id="message-form">
+            <input type="text" id="sender" placeholder="Tu nombre" required>
+            <input type="text" id="message" placeholder="Escribe un mensaje..." required>
+            <button type="submit">Enviar</button>
+        </form>
+        <button id="edit-message-btn" style="display: none;" data-message-id="">Editar Mensaje</button>
+        <button id="delete-message-btn" style="display: none;">Eliminar Mensaje</button>
+        <button id="clear-history-btn">Borrar Historial</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

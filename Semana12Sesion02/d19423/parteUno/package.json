@@ -1,7 +1,6 @@
 {
   "name": "parteuno",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
@@ -13,5 +12,6 @@
   "dependencies": {
     "formidable": "^3.5.1",
     "nodemon": "^3.1.0"
-  }
+  },
+  "description": ""
 }

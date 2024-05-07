@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat with Socket io</title>
+    <style>
+      body {
+        margin: 0;
+        padding-bottom: 3rem;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+      }
+
+      #form {
+        background: rgba(0, 0, 0, 0.15);
+        padding: 0.25rem;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        height: 3rem;
+        box-sizing: border-box;
+        backdrop-filter: blur(10px);
+      }
+      #input {
+        border: none;
+        padding: 0 1rem;
+        flex-grow: 1;
+        border-radius: 2rem;
+        margin: 0.25rem;
+      }
+      #input:focus {
+        outline: none;
+      }
+      #form > button {
+        background: #333;
+        border: none;
+        padding: 0 1rem;
+        margin: 0.25rem;
+        border-radius: 3px;
+        outline: none;
+        color: #fff;
+      }
+
+      #messages {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      #messages > li {
+        padding: 0.5rem 1rem;
+      }
+      #messages > li:nth-child(odd) {
+        background: #efefef;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+
+    <form id="form" action="">
+      <input id="input" autocomplete="off" />
+      <label for="username">Username</label>
+      <input id="username" />
+      <label for="to">para</label>
+      <input id="to" />
+
+      <button id="sendMessageButton">Send</button>
+      <button id="fetchHistoryButton">Fetch History</button>
+    </form>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+    <script>
+      const socket = io();
+      const messages = document.getElementById("messages");
+      const form = document.getElementById("form");
+      const input = document.getElementById("input");
+      const username = document.getElementById("username");
+      const to = document.getElementById("to");
+
+      // Función para enviar un mensaje
+      function sendMessage() {
+        if (input.value) {
+          const item = document.createElement("li");
+          item.textContent = `${username.value}: ${input.value}`;
+          messages.appendChild(item);
+          socket.emit("chat message", {
+            from: username.value,
+            to: to.value,
+            message: input.value,
+          });
+          input.value = "";
+        }
+      }
+
+      // Evento al enviar el formulario
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        sendMessage();
+      });
+
+      // Evento al recibir un mensaje
+      socket.on("chat message", (msg) => {
+        if (msg.to == username.value && msg.from == to.value) {
+          const item = document.createElement("li");
+          item.textContent = `${msg.from}: ${msg.message}`;
+          messages.appendChild(item);
+          window.scrollTo(0, document.body.scrollHeight);
+        }
+      });
+
+      // Evento al hacer clic en el botón "Fetch History"
+      document.getElementById("fetchHistoryButton").addEventListener("click", (e) => {
+        e.preventDefault();
+        const username = document.getElementById("username").value; // Obtener el nombre de usuario
+        const tos = document.getElementById("to").value; // Obtener el nombre de usuario
+        fetch(`/messages/${username}/${tos}`)
+          .then((response) => response.json())
+          .then((data) => {
+            messages.innerHTML = ""; // Limpiar mensajes actuales
+            if (data.length > 0) {
+            data.forEach((msg) => {
+                const item = document.createElement("li");
+                const messageText = `${msg.from}: ${msg.message}`;
+                item.textContent = messageText;
+                messages.appendChild(item);
+
+                // Agregar botón de editar si el mensaje es del usuario actual
+                if (msg.from === username) {
+                    const editButton = document.createElement("button");
+                    editButton.textContent = "Editar";
+                    editButton.style.marginLeft = "5px";
+                    editButton.addEventListener("click", () => {
+                        // Crear un input para editar el mensaje
+                        const input = document.createElement("input");
+                        input.type = "text";
+                        input.value = msg.message;
+                        item.textContent = ''; // Limpiar contenido del elemento li
+                        item.appendChild(input);
+
+                        // Crear un botón para guardar la edición
+                        const saveButton = document.createElement("button");
+                        saveButton.textContent = "Guardar";
+                        saveButton.style.marginLeft = "5px";
+                        saveButton.addEventListener("click", () => {
+                            const newMessage = input.value;
+                            // Enviar solicitud PUT al servidor para actualizar el mensaje
+                            fetch(`/messages/${msg._id}`, {
+                                method: "PUT",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    username: username,
+                                    newMessage: newMessage
+                                })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                // Actualizar el contenido del mensaje en el cliente si es necesario
+                                item.textContent = `${username}: ${newMessage}`;
+                                editButton.style.display = "inline-block";
+                            })
+                            .catch(error => console.error("Error al editar el mensaje:", error));
+                            
+                        });
+                        item.appendChild(saveButton);
+
+                        // Crear un botón para cancelar la edición
+                        const cancelButton = document.createElement("button");
+                        cancelButton.textContent = "Cancelar";
+                        cancelButton.style.marginLeft = "5px";
+                        cancelButton.addEventListener("click", () => {
+                            // Restaurar el mensaje original
+                            item.textContent = messageText;
+                        });
+                        item.appendChild(cancelButton);
+                    });
+                    item.appendChild(editButton);
+                }
+            });
+        } else {
+            const item = document.createElement("li");
+            item.textContent = "No hay mensajes almacenados.";
+            messages.appendChild(item);
+        }
+    })
+    .catch((error) => console.error("Error al obtener mensajes:", error));
+      });
+    </script>
+  </body>
+</html>
